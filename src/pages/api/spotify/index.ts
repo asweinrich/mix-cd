@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const response = await axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50&offset=50', {
+    const response = await axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50&offset=0', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

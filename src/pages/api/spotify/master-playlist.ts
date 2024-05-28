@@ -5,7 +5,7 @@ const masterUserId = process.env.MASTER_USER_ID;
 const masterPlaylistId = process.env.MASTER_PLAYLIST_ID;
 
 async function fetchMasterPlaylist(accessToken: string) {
-  const response = await axios.get(`https://api.spotify.com/v1/users/${masterUserId}/playlists/${masterPlaylistId}/tracks`, {
+  const response = await axios.get(`https://api.spotify.com/v1/playlists/${masterPlaylistId}/tracks?fields=items%28track%28name%2Chref%2Calbum%28name%2Chref%2C+images%29%29%29&offset=0`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

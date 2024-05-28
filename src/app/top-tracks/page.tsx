@@ -24,16 +24,26 @@ const TopTracksContent: React.FC = () => {
   const { data: session } = useSession();
   const [userTracks, setUserTracks] = useState<Track[]>([]);
   const [masterTracks, setMasterTracks] = useState<Track[]>([]);
-  const [matchingTracks, setMatchingTracks] = useState<Track[]>([]);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (session?.accessToken) {
+      console.log('Access Token:', session.accessToken); // Debug log
+      setAccessToken(session.accessToken);
+    } else {
+      console.log('No access token available'); // Debug log
+      setError('No access token available');
+    }
+  }, [session]);
+
+  useEffect(() => {
+    if (accessToken) {
       // Fetch user top tracks
       axios
         .get('/api/spotify/top-tracks', {
           params: {
-            accessToken: session.accessToken,
+            accessToken: accessToken,
           },
         })
         .then((res) => setUserTracks(res.data))
@@ -44,9 +54,9 @@ const TopTracksContent: React.FC = () => {
 
       // Fetch master user's playlist
       axios
-        .get('/api/spotify/andrews-stuff', {
+        .get('/api/spotify/master-playlist', {
           params: {
-            accessToken: session.accessToken,
+            accessToken: accessToken,
           },
         })
         .then((res) => setMasterTracks(res.data))
@@ -54,18 +64,8 @@ const TopTracksContent: React.FC = () => {
           console.error('Error fetching master playlist:', err);
           setError(err.message);
         });
-    } else {
-      setError('No access token available');
     }
-  }, [session]);
-
-  useEffect(() => {
-    // Compare userTracks and masterTracks to find matching tracks
-    const matches = userTracks.filter((userTrack) =>
-      masterTracks.some((masterTrack) => masterTrack.track.id === userTrack.id)
-    );
-    setMatchingTracks(matches);
-  }, [userTracks, masterTracks]);
+  }, [accessToken]);
 
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center p-6">
@@ -108,8 +108,6 @@ const TopTracksContent: React.FC = () => {
                 </li>
               ))}
             </ul>
-
-            
           </>
         )}
       </div>
