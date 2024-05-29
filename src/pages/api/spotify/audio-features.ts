@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     res.status(200).json({ audio_features: audioFeatures });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error fetching audio features:', error);
     res.status(error.response?.status || 500).json({ error: error.message });
   }
