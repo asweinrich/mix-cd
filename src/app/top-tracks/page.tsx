@@ -27,8 +27,9 @@ const TopTracksContent: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log(session)
-    if (session?.accessToken) {
+    
+    if (session && session.accessToken) {
+      
       axios
         .get('/api/spotify/top-tracks', {
           params: {
