@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
 async function fetchTopTracks(accessToken: string, offset: number) {
-  const limit = 50;
+  const limit = 15;
   const response = await axios.get('https://api.spotify.com/v1/me/top/tracks?time_range=long_term', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
