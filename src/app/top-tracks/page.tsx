@@ -12,6 +12,10 @@ interface Track {
   album: { images: { url: string }[] };
 }
 
+interface MasterTrack {
+  track: Track;
+}
+
 interface AudioFeatures {
   id: string;
   danceability: number;
@@ -38,7 +42,7 @@ const TopTracksPage: React.FC = () => {
 const TopTracksContent: React.FC = () => {
   const { data: session } = useSession();
   const [userTracks, setUserTracks] = useState<Track[]>([]);
-  const [masterTracks, setMasterTracks] = useState<Track[]>([]);
+  const [masterTracks, setMasterTracks] = useState<MasterTrack[]>([]);
   const [userAudioFeatures, setUserAudioFeatures] = useState<AudioFeatures[]>([]);
   const [masterAudioFeatures, setMasterAudioFeatures] = useState<AudioFeatures[]>([]);
   const [matchingTracks, setMatchingTracks] = useState<Track[]>([]);
@@ -117,7 +121,6 @@ const TopTracksContent: React.FC = () => {
       ).map(match => masterTracks.find(track => track.track.id === match.id).track);
 
       setMatchingTracks(matches);
-      console.log(matches)
     }
   }, [userAudioFeatures, masterAudioFeatures, masterTracks]);
 
