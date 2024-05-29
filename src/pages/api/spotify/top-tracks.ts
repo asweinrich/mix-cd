@@ -25,10 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const firstBatch = await fetchTopTracks(accessToken, 0);
-    const secondBatch = await fetchTopTracks(accessToken, 50);
-    const thirdBatch = await fetchTopTracks(accessToken, 100);
-    const fourthBatch = await fetchTopTracks(accessToken, 150);
-    const top200Tracks = [...firstBatch, ...secondBatch, ...thirdBatch, ...fourthBatch];
+    //const secondBatch = await fetchTopTracks(accessToken, 50);
+    //const thirdBatch = await fetchTopTracks(accessToken, 100);
+    //const fourthBatch = await fetchTopTracks(accessToken, 150);
+    const top200Tracks = [...firstBatch];
     return res.status(200).json(top200Tracks);
   } catch (error: any) {
     console.error('Error fetching top tracks:', error);
