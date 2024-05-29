@@ -5,11 +5,20 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-interface Track {
+interface UserTrack {
   id: string;
   name: string;
   artists: { name: string }[];
   album: { images: { url: string }[] };
+}
+
+interface MasterTrack {
+  track: {
+    id: string;
+    name: string;
+    artists: { name: string }[];
+    album: { images: { url: string }[] };
+  };
 }
 
 const TopTracksPage: React.FC = () => {
@@ -22,14 +31,14 @@ const TopTracksPage: React.FC = () => {
 
 const TopTracksContent: React.FC = () => {
   const { data: session } = useSession();
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [masterTracks, setMasterTracks] = useState<Track[]>([]);
+  const [tracks, setTracks] = useState<UserTrack[]>([]);
+  const [masterTracks, setMasterTracks] = useState<MasterTrack[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     
     if (session && session.accessToken) {
-      
+
       axios
         .get('/api/spotify/top-tracks', {
           params: {
