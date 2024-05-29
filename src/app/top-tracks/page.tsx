@@ -118,7 +118,10 @@ const TopTracksContent: React.FC = () => {
           Math.abs(userTrack.danceability - masterTrack.danceability) < 0.1 &&
           Math.abs(userTrack.energy - masterTrack.energy) < 0.1
         )
-      ).map(match => masterTracks.find(track => track.track.id === match.id).track);
+      ).map(match => {
+        const foundTrack = masterTracks.find(track => track.track.id === match.id);
+        return foundTrack ? foundTrack.track : null;
+      }).filter(track => track !== null) as Track[];
 
       setMatchingTracks(matches);
     }
