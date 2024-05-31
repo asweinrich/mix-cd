@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    let allTracks = [];
+    let allTracks: Track[] = [];
     let offset = 0;
 
     // Fetch master playlist tracks in batches of 50
