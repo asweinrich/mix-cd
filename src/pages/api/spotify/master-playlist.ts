@@ -3,7 +3,23 @@ import axios from 'axios';
 
 const masterPlaylistId = process.env.MASTER_PLAYLIST_ID;
 
-async function fetchMasterPlaylist(accessToken: string, offset: number = 0) {
+interface Track {
+  track: {
+    id: string;
+    name: string;
+    artists: { name: string }[];
+    album: { images: { url: string }[] };
+    audio_features?: {
+      acousticness: number;
+      danceability: number;
+      energy: number;
+      instrumentalness: number;
+      valence: number;
+    };
+  };
+}
+
+async function fetchMasterPlaylist(accessToken: string, offset: number = 0): Promise<Track[]> {
   const response = await axios.get(`https://api.spotify.com/v1/playlists/${masterPlaylistId}/tracks`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
