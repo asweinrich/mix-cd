@@ -15,6 +15,7 @@ interface Track {
       energy: number;
       instrumentalness: number;
       valence: number;
+      tempo: number;
     };
   };
 }
